@@ -1,6 +1,6 @@
-# Flask-Init
-Modular Flask Init
+# Modular Flask Setup
 
+## Create Environment File
 .env file
 ```
 # Flask Configuration
@@ -14,10 +14,15 @@ SECRET_KEY=dev-secret-key-change-in-production
 DATABASE_URL=sqlite:///dev.db
 DEV_DATABASE_URL=sqlite:///dev.db
 ```
-
+## Initialize Database
 Use Flask_migrate to Init, Migrate, Upgrade DB
 ```
 flask --app MainApp.wsgi db init
 flask --app MainApp.wsgi db migrate
 flask --app MainApp.wsgi db upgrade
+```
+
+## Run flask
+```
+python manage.py runserver localhost:5000
 ```
