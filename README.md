@@ -16,3 +16,8 @@ DEV_DATABASE_URL=sqlite:///dev.db
 ```
 
 Use Flask_migrate to Init, Migrate, Upgrade DB
+```
+flask --app MainApp.wsgi db init
+flask --app MainApp.wsgi db migrate
+flask --app MainApp.wsgi db upgrade
+```
