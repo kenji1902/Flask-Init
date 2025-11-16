@@ -14,3 +14,5 @@ SECRET_KEY=dev-secret-key-change-in-production
 DATABASE_URL=sqlite:///dev.db
 DEV_DATABASE_URL=sqlite:///dev.db
 ```
+
+Use Flask_migrate to Init, Migrate, Upgrade DB
