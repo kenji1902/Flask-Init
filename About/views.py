@@ -11,7 +11,7 @@ def about():
     template showing that content.
     """
     now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    content_text = f'viewed at this {now}'
+    content_text = f'viewed at '
 
     # Persist a record to the DB (committed immediately)
     record = AboutModel(content=content_text)

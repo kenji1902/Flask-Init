@@ -4,7 +4,7 @@
 {% if entries %}
 	<ul>
 	{% for e in entries %}
-		<li>#{{ e.id }} — {{ e.content }}</li>
+		<li>#{{ e.id }} — {{ e.content }} {{e.created_at}}</li>
 	{% endfor %}
 	</ul>
 {% else %}
