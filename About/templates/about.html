@@ -1,0 +1,12 @@
+<link rel="stylesheet" href="{{ css_url }}">
+<h1>About page</h1>
+<h2>View history</h2>
+{% if entries %}
+	<ul>
+	{% for e in entries %}
+		<li>#{{ e.id }} — {{ e.content }}</li>
+	{% endfor %}
+	</ul>
+{% else %}
+	<p>No views recorded yet.</p>
+{% endif %}

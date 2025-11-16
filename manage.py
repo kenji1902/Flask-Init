@@ -13,6 +13,8 @@ load_dotenv()
 os.environ.get('FLASK_CONFIG', 'base')
 
 from MainApp.wsgi import app
+from MainApp.db import db
+import code
 
 
 def runserver(host: str = '127.0.0.1', port: int = 5000, debug: bool = None):
@@ -138,6 +140,33 @@ def collectstatic(dest: str = None, fingerprint: bool = False):
             print(f'Failed to write manifest.json: {exc}')
 
 
+def initdb(drop: bool = False):
+    """Create all database tables. If drop=True, drop tables first."""
+    with app.app_context():
+        if drop:
+            print('Dropping all tables...')
+            db.drop_all()
+        print('Creating tables...')
+        db.create_all()
+        print('Done.')
+
+
+def dropdb():
+    """Drop all database tables (destructive)."""
+    with app.app_context():
+        print('Dropping all tables...')
+        db.drop_all()
+        print('Done.')
+
+
+def shell():
+    """Open a Python shell with app and db in the local namespace."""
+    ctx = {'app': app, 'db': db}
+    banner = 'App shell. `app`, `db` are available.'
+    with app.app_context():
+        code.interact(banner=banner, local=ctx)
+
+
 if __name__ == '__main__':
     if len(sys.argv) > 1:
         cmd = sys.argv[1]
@@ -190,7 +219,20 @@ if __name__ == '__main__':
                         dest = a
 
             collectstatic(dest, fingerprint=fingerprint)
+        elif cmd == 'initdb':
+            # python manage.py initdb [--drop]
+            args = sys.argv[2:]
+            drop = False
+            for a in args:
+                if a == '--drop':
+                    drop = True
+            initdb(drop=drop)
+        elif cmd == 'dropdb':
+            # python manage.py dropdb
+            dropdb()
+        elif cmd == 'shell':
+            shell()
         else:
-            print('Usage: python manage.py [runserver|collectstatic [dest_dir]]')
+            print('Usage: python manage.py [runserver|collectstatic [dest_dir]|initdb|dropdb|shell]')
     else:
-        print('Usage: python manage.py [runserver|collectstatic [dest_dir]]')
+        print('Usage: python manage.py [runserver|collectstatic [dest_dir]|initdb|dropdb|shell]')
